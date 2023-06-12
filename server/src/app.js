@@ -9,10 +9,6 @@ const formatResturant = require("./formatResturant");
 const formatReservation = require("./formatReservation");
 
 const app = express();
-// const checkJwt = auth({
-//   audience: "https://housetricks.com",
-//   issuerBaseURL: `https://dev-zwy3jd28mlvn6shl.us.auth0.com/`,
-// });
 
 const checkJwt = auth({
   audience: "https://reservationizr.com",
@@ -27,7 +23,7 @@ app.post(
   "/reservations",
   celebrate({
     [Segments.BODY]: Joi.object().keys({
-      partySize: Joi.number().min(0).required(),
+      partySize: Joi.number().min(1).required(),
       date: Joi.string().required(),
       restaurantName: Joi.string().required(),
     }),
@@ -63,16 +59,17 @@ app.get("/reservations/:id", checkJwt, async (req, res) => {
 
   const reservation = await ReservationModel.findById(id);
 
+  // check if the reservation exists
+  if (reservation === null) {
+    return res.status(404).send({ error: "not found" });
+  }
+
   // check if they are trying to access a reservation they did not create
   const userId = auth.payload.sub;
   if (reservation.userId !== userId) {
     return res.status(403).send({
       error: "user does not have permission to access this reservation",
     });
-  }
-
-  if (reservation === null) {
-    return res.status(404).send({ error: "not found" });
   }
 
   return res.status(200).send(formatReservation(reservation));
@@ -83,9 +80,10 @@ app.get("/restaurants", async (req, res) => {
   const restaurant = await RestaurantModel.find({});
   return res.status(200).send(restaurant.map(formatResturant));
 });
-// get all reservations
+// get all reservations for the authenticated user
 app.get("/reservations", checkJwt, async (req, res) => {
-  const reservations = await ReservationModel.find({});
+  const userId = req.auth.payload.sub; // get userId from the JWT
+  const reservations = await ReservationModel.find({ userId: userId }); // filter the reservations by userId
   return res.status(200).send(reservations.map(formatReservation));
 });
 

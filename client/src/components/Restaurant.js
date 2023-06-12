@@ -14,7 +14,7 @@ const Restaurant = () => {
       // FIXME: Make a fetch request and call setRestaurant with the response body
       const data = await response.json();
       setRestaurant(data);
-      console.log(restaurant);
+      // console.log(restaurant);
       setIsLoading(false);
     };
     fetchData();

@@ -20,6 +20,7 @@ const ReservationList = () => {
         },
       });
       const data = await response.json();
+
       setReservations(data); //map and apply formatDate
       setIsLoading(false);
 
@@ -27,7 +28,7 @@ const ReservationList = () => {
       //   (reservation) => reservation.userId === user.sub
       // );
 
-      console.log(await getAccessTokenSilently());
+      // console.log(await getAccessTokenSilently());
       setReservations(data);
     };
     fetchData();
@@ -38,20 +39,32 @@ const ReservationList = () => {
   return (
     <>
       <h1>Upcoming reservations</h1>
-      {reservations.length > 0 ? (
-        reservations.map((reservation) => (
-          <div key={reservation._id}>
-            <h2>{reservation.restaurantName}</h2>
-            <p>Party size: {reservation.partySize}</p>
-            <p>Date: {formatDate(reservation.date)}</p>
+      <ul className="reservation-list">
+        {reservations.length > 0 ? (
+          reservations.map((reservation) => {
+            const formattedDate = formatDate(reservation.date);
+            return (
+              <li key={reservation._id} className="reservation">
+                <h2 className="reservation-title">
+                  {reservation.restaurantName}
+                </h2>
+                <p className="reservation-date">Date: {formattedDate}</p>
+                <Link
+                  to={`/reservations/${reservation.id}`}
+                  className="reservation-details"
+                >
+                  View Details ->
+                </Link>
+              </li>
+            );
+          })
+        ) : (
+          <div>
+            <p>You dont have any reservations</p>
+            <Link to="Restaurantlist">View the restaurants</Link>
           </div>
-        ))
-      ) : (
-        <div>
-          <p>You dont have any reservations</p>
-          <Link to="Restaurantlist">View the restaurants</Link>
-        </div>
-      )}
+        )}
+      </ul>
       {/* display all of users reservations here */}
     </>
   );

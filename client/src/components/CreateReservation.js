@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import "./CreateReservation.css";
 import { formatDate } from "../utils/formatDate";
@@ -24,6 +25,7 @@ const CreateReservation = ({ restaurantName }) => {
       date: date,
       restaurantName: restaurantName,
     };
+    console.log(date);
 
     const response = await fetch("http://localhost:5001/reservations", {
       method: "POST",
@@ -35,11 +37,11 @@ const CreateReservation = ({ restaurantName }) => {
     });
 
     if (!response.ok) {
-      setIsError(true);
       setErrorStatus(response.status);
+      setIsError(true);
     } else {
       setIsLoading(false);
-      navigate("/");
+      navigate("/reservations");
     }
   };
   return (
@@ -53,6 +55,7 @@ const CreateReservation = ({ restaurantName }) => {
         required
       />
       <DatePicker selected={date} onChange={(date) => setDate(date)} />
+
       <button className="submit-btn" type="submit" disabled={isLoading}>
         Submit
       </button>

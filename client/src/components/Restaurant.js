@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import CreateReservation from "./CreateReservation";
 import "./Restaurant.css";
-
+import "./reset.css";
 const Restaurant = () => {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState({});
@@ -11,10 +11,9 @@ const Restaurant = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`http://localhost:5001/restaurants/${id}`);
-      // FIXME: Make a fetch request and call setRestaurant with the response body
       const data = await response.json();
       setRestaurant(data);
-      // console.log(restaurant);
+
       setIsLoading(false);
     };
     fetchData();
@@ -26,10 +25,12 @@ const Restaurant = () => {
 
   return (
     <>
-      <img src={restaurant.image} alt="fix me" />
-      <div className="restaurant-text-container">
-        <h1 className="restaurant-title">{restaurant.name}</h1>
-        <p className="restaurant-description">{restaurant.description}</p>
+      <div className="restaurant-container">
+        <img src={restaurant.image} alt="fix me" />
+        <div className="restaurant-text-container">
+          <h1 className="restaurant-title">{restaurant.name}</h1>
+          <p className="restaurant-description">{restaurant.description}</p>
+        </div>
       </div>
       <CreateReservation restaurantName={restaurant.name} />
     </>

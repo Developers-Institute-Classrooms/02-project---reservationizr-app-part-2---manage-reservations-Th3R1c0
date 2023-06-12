@@ -3,6 +3,7 @@
   padding: 1rem 0;
   text-align: center;
   margin-bottom: 3rem;
+  display: flex;
 }
 
 .header-title {
@@ -33,6 +34,8 @@
 
 .nav {
   width: 100%;
+  display: flex;
+  flex-direction: column; /* Add this line */
 }
 
 .nav-item {
@@ -59,6 +62,7 @@
     gap: 1rem;
     place-items: center;
     justify-content: center;
+    flex-direction: row; /* Add this line */
   }
 
   /* .nav {

@@ -1,0 +1,42 @@
+.reservation-button {
+  padding: 10px;
+  background-color: lightgray;
+  border-radius: 5px;
+  text-decoration: none;
+  color: black;
+  width: max-content;
+}
+h1 {
+  font-size: 2rem;
+}
+.reservation-partySize {
+  font-weight: bold;
+}
+.reservation-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.reservation {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  color: red;
+  font-size: 1rem;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (min-width: 40rem) {
+  .reservation {
+    display: block;
+  }
+}

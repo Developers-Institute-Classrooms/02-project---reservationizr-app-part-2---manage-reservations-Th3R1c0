@@ -13,6 +13,7 @@ const CreateReservation = ({ restaurantName }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorStatus, setErrorStatus] = useState(false);
+  const [disabled, isDisabled] = useState(false);
   const { getAccessTokenSilently } = useAuth0();
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,7 +26,6 @@ const CreateReservation = ({ restaurantName }) => {
       date: date,
       restaurantName: restaurantName,
     };
-    console.log(date);
 
     const response = await fetch("http://localhost:5001/reservations", {
       method: "POST",
@@ -44,22 +44,40 @@ const CreateReservation = ({ restaurantName }) => {
       navigate("/reservations");
     }
   };
+  useEffect(() => {
+    if (partySize <= 0) {
+      isDisabled(true);
+    } else {
+      isDisabled(false);
+    }
+  }, [date, partySize]);
+  const today = new Date();
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="reservation-guest-input">Number of guests</label>
-      <input
-        className="reservation-guest-input"
-        type="text"
-        value={partySize}
-        onChange={(e) => setPartySize(e.target.value)}
-        required
-      />
-      <DatePicker selected={date} onChange={(date) => setDate(date)} />
+    <>
+      <h1 className="reservation-restaurant-name">Reserve {restaurantName}</h1>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="reservation-guest-input">Number of guests</label>
+        <input
+          className="reservation-guest-input"
+          type="text"
+          value={partySize}
+          onChange={(e) => setPartySize(e.target.value)}
+          required
+        />
+        <label htmlFor="datepicker">Date</label>
+        <DatePicker
+          id="datepicker"
+          selected={date}
+          onChange={(date) => setDate(date)}
+          minDate={today}
+          showTimeSelect
+        />
 
-      <button className="submit-btn" type="submit" disabled={isLoading}>
-        Submit
-      </button>
-    </form>
+        <button className="submit-btn" type="submit" disabled={isDisabled}>
+          Submit
+        </button>
+      </form>
+    </>
   );
 };
 

@@ -1,4 +1,3 @@
-// FIXME: Add a Mongoose model here
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 

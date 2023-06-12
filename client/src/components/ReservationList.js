@@ -1,4 +1,5 @@
 import "./ReservationList.css";
+import "./reset.css";
 import { formatDate } from "../utils/formatDate";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -21,14 +22,9 @@ const ReservationList = () => {
       });
       const data = await response.json();
 
-      setReservations(data); //map and apply formatDate
+      setReservations(data);
       setIsLoading(false);
 
-      // const userReservations = data.filter(
-      //   (reservation) => reservation.userId === user.sub
-      // );
-
-      // console.log(await getAccessTokenSilently());
       setReservations(data);
     };
     fetchData();
@@ -38,7 +34,7 @@ const ReservationList = () => {
   }
   return (
     <>
-      <h1>Upcoming reservations</h1>
+      <h1 className="reservationlist-title">Upcoming reservations</h1>
       <ul className="reservation-list">
         {reservations.length > 0 ? (
           reservations.map((reservation) => {
@@ -48,24 +44,25 @@ const ReservationList = () => {
                 <h2 className="reservation-title">
                   {reservation.restaurantName}
                 </h2>
-                <p className="reservation-date">Date: {formattedDate}</p>
+                <p className="reservation-date"> {formattedDate}</p>
                 <Link
                   to={`/reservations/${reservation.id}`}
                   className="reservation-details"
                 >
-                  View Details ->
+                  View Details {"->"}
                 </Link>
               </li>
             );
           })
         ) : (
-          <div>
+          <div className="reservation-none">
             <p>You dont have any reservations</p>
-            <Link to="Restaurantlist">View the restaurants</Link>
+            <Link className="reservation-details" to="/">
+              View the restaurants
+            </Link>
           </div>
         )}
       </ul>
-      {/* display all of users reservations here */}
     </>
   );
 };

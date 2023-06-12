@@ -3,6 +3,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useParams } from "react-router-dom";
 import { formatDate } from "../utils/formatDate";
 import { Link } from "react-router-dom";
+import "./reset.css";
+import "./Reservation.css";
 const Reservation = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -40,23 +42,34 @@ const Reservation = () => {
     };
 
     fetchData();
-  }, []);
+  }, [getAccessTokenSilently, id]);
 
   if (isLoading) {
     return <p>Loading...</p>;
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return (
+      <div className="error-container">
+        <h1 className="error">Sorry! We can't find that reservation</h1>
+        <Link to="/reservations" className="reservation-button">
+          {"<-"} Back to reservations
+        </Link>
+      </div>
+    );
   }
 
   return (
-    <>
-      <h1>{data.restaurantName}</h1>
-      <p>{formatDate(data.date)}</p>
-      <p>Party Size: {data.partySize}</p>
-      <Link to="/reservations">{"<-"} Back to reservations</Link>
-    </>
+    <div className="reservation">
+      <div className="reservation-container">
+        <h1 className="reservation-title">{data.restaurantName}</h1>
+        <p>{formatDate(data.date)}</p>
+        <p className="reservation-partySize">Party Size: {data.partySize}</p>
+      </div>
+      <Link to="/reservations" className="reservation-button">
+        {"<-"} Back to reservations
+      </Link>
+    </div>
   );
 };
 

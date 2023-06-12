@@ -1,4 +1,5 @@
 import "./RestaurantList.css";
+import "./reset.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 const RestaurantList = () => {
@@ -29,11 +30,12 @@ const RestaurantList = () => {
                 <p className="restaurant-description">
                   {restaurant.description}
                 </p>
-                <Link to={`/restaurants/${restaurant.id}`}>
-                  <button className="restaurant-reservenow-btn">
-                    <p>Reserve now</p>
-                    <div>-></div>
-                  </button>
+                <Link
+                  to={`/restaurants/${restaurant.id}`}
+                  className="restaurant-reservenow-btn"
+                >
+                  <p>Reserve now</p>
+                  <div>{"->"}</div>
                 </Link>
               </div>
             </li>

@@ -21,6 +21,7 @@ app.use(express.json());
 // create a new reservation
 app.post(
   "/reservations",
+  checkJwt,
   celebrate({
     [Segments.BODY]: Joi.object().keys({
       partySize: Joi.number().min(1).required(),
@@ -28,7 +29,6 @@ app.post(
       restaurantName: Joi.string().required(),
     }),
   }),
-  checkJwt,
   async (req, res, next) => {
     try {
       const { body, auth } = req;

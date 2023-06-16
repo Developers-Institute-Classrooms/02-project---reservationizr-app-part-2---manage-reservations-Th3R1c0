@@ -26,7 +26,7 @@ const Restaurant = () => {
   return (
     <>
       <div className="restaurant-container">
-        <img src={restaurant.image} alt="fix me" />
+        <img src={restaurant.image} alt={`photo of restaurant ${restaurant.name}`} />
         <div className="restaurant-text-container">
           <h1 className="restaurant-title">{restaurant.name}</h1>
           <p className="restaurant-description">{restaurant.description}</p>

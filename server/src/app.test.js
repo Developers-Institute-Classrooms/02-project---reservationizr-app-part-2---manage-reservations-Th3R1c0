@@ -119,16 +119,29 @@ describe("app", () => {
 
   test("GET /restaurants/:id returns 404 when you supply a restaurant id that doesn’t exist in the database", async () => {
     const expectedStatus = 404;
-
+    const expectedBody = {
+      "error": "restaurant not found"
+  }
     await request(app)
       .get("/restaurants/616005e26d59880f8f1e619b")
-      .expect(expectedStatus);
+      .expect(expectedStatus)
+      .expect((response) => {
+        expect(response.body).toEqual(expectedBody);
+      });
+      
   });
 
   test("GET /restaurants/:id returns 400 when you supply an invalid restaurant id", async () => {
     const expectedStatus = 400;
-
-    await request(app).get("/restaurants/bad-id").expect(expectedStatus);
+    const expectedBody = {
+      "error": "invalid id provided"
+  }
+    await request(app).get("/restaurants/bad-id")
+    .expect(expectedStatus)
+    .expect((response) => {
+      expect(response.body).toEqual(expectedBody);
+    });
+    
   });
 
   test("GET /reservations/:id returns a single reservation", async () => {

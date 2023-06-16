@@ -15,9 +15,6 @@
   gap: 1rem;
 }
 
-.restaurant img {
-  /* Styles for the <img> element within .restaurant */
-}
 .restaurant-list-title {
   font-weight: bold;
   font-size: 2rem;
@@ -35,9 +32,6 @@
   font-size: 1.5rem;
 }
 
-.restaurant-description {
-  /* Styles for the <p> element with className="restaurant-description" */
-}
 
 .restaurant-reservenow-btn {
   border-radius: 0.25rem;
@@ -65,7 +59,5 @@
     width: 30%;
     object-fit: contain;
     align-self: first baseline;
-  }
-  .restaurant-text-container {
   }
 }

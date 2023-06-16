@@ -98,7 +98,7 @@ app.get("/restaurants/:id", async (req, res) => {
   const resturant = await RestaurantModel.findById(id);
 
   if (resturant === null) {
-    return res.status(404).send({ error: "not found" });
+    return res.status(404).send({ error: "restaurant not found" });
   }
 
   return res.status(200).send(formatResturant(resturant));

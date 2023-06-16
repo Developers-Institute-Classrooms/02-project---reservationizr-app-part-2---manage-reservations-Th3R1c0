@@ -131,18 +131,7 @@ describe("app", () => {
       
   });
 
-  test("GET /restaurants/:id returns 400 when you supply an invalid restaurant id", async () => {
-    const expectedStatus = 400;
-    const expectedBody = {
-      "error": "invalid id provided"
-  }
-    await request(app).get("/restaurants/bad-id")
-    .expect(expectedStatus)
-    .expect((response) => {
-      expect(response.body).toEqual(expectedBody);
-    });
-    
-  });
+
 
   test("GET /reservations/:id returns a single reservation", async () => {
     const expectedStatus = 200;
@@ -186,5 +175,17 @@ describe("app", () => {
       .expect((response) => {
         expect(response.body).toEqual(expectedBody);
       });
+  });
+  test("GET /restaurants/:id returns 400 when you supply an invalid restaurant id", async () => {
+    const expectedStatus = 400;
+    const expectedBody = {
+      "error": "invalid id provided"
+  }
+    await request(app).get("/restaurants/bad-id")
+    .expect(expectedStatus)
+    .expect((response) => {
+      expect(response.body).toEqual(expectedBody);
+    });
+    
   });
 });
